@@ -1,0 +1,163 @@
+:root {
+    --cell-size: 100px;
+    --color-x-hover: #ff3333; /* for X hover */
+    --color-o-hover: #3333ff; /* for O hover */
+    --color-x-set: #ff0000; /* when X set */
+    --color-o-set: #0000ff; /* when O set */
+    --l: 10px; /* X line-width */
+}
+
+body {
+    margin: 0;
+    font-family: 'Bungee Tint', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.board {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(3, auto);
+}
+
+.cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.cell:nth-child(1), .cell:nth-child(2), .cell:nth-child(3) {
+    border-top: none;
+}
+
+.cell:nth-child(1), .cell:nth-child(4), .cell:nth-child(7) {
+    border-left: none;
+}
+
+.cell:nth-child(3), .cell:nth-child(6), .cell:nth-child(9) {
+    border-right: none;
+}
+
+.cell:nth-child(7), .cell:nth-child(8), .cell:nth-child(9) {
+    border-bottom: none;
+}
+
+.cell.x, .cell.circle {
+    cursor: not-allowed;
+}
+
+.board.x .cell:not(.circle):not(.x):hover {
+    background: linear-gradient(
+        to top right,
+        transparent calc(50% - var(--l) / 2),
+        var(--color-x-hover) calc(50% - var(--l) / 2),
+        calc(50% + var(--l) / 2),
+        transparent calc(50% + var(--l) / 2)
+      ),
+      linear-gradient(
+        to bottom right,
+        transparent calc(50% - var(--l) / 2),
+        var(--color-x-hover) calc(50% - var(--l) / 2),
+        calc(50% + var(--l) / 2),
+        transparent calc(50% + var(--l) / 2)
+      );
+    background-size: 80% 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.cell:not(.circle).x {
+    background: linear-gradient(
+        to top right,
+        transparent calc(50% - var(--l) / 2),
+        var(--color-x-set) calc(50% - var(--l) / 2),
+        calc(50% + var(--l) / 2),
+        transparent calc(50% + var(--l) / 2)
+      ),
+      linear-gradient(
+        to bottom right,
+        transparent calc(50% - var(--l) / 2),
+        var(--color-x-set) calc(50% - var(--l) / 2),
+        calc(50% + var(--l) / 2),
+        transparent calc(50% + var(--l) / 2)
+      );
+    background-size: 80% 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.board.circle .cell:not(.circle):not(.x):hover {
+    background: radial-gradient(var(--color-o-hover) 60%, transparent 60%);
+}
+
+.cell:not(.x).circle {
+    background: radial-gradient(var(--color-o-set) 60%, transparent 60%);
+}
+
+.winning-message {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #4CAF50; /* green background */
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 5rem;
+    font-family: 'Courier New', Courier, monospace;
+    flex-direction: column;
+}
+
+.winning-message button {
+    border-radius: 10px;
+    font-size: 3rem;
+    background-color: white;
+    border: 1px solid #4CAF50;
+    padding: 0.25em 0.5em;
+    cursor: pointer;
+}
+
+.winning-message button:hover {
+    background-color: #4CAF50;
+    color: white;
+    border-color: white;
+}
+
+.winning-message.show {
+    display: flex;
+}
+
+.score-board {
+    position: absolute;
+    top: 22%; /* Positioning above the board */
+    left: 50%; /* Centering above the board */
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace; /* Match the winner screen */
+    color: black;
+    font-size: 1rem;
+}
+
+.score-X, .score-O {
+    font-size: 1.5rem;
+}
+
+.score-X {
+    color: red; /* Ensuring Player X's score is in red */
+}
+
+.score-O {
+    color: blue; /* Ensuring Player O's score is in blue */
+}
